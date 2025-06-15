@@ -81,7 +81,7 @@ const LoginPage: React.FC = () => {
 
                             <div className={styles.RegisterLinkContainer}>
                                 <p className={styles.RegisterLinkText}>
-                                    Don't have an account?{' '}
+                                    Don&apos;t have an account?{' '}
                                     <a href="#" className={styles.RegisterLink}>
                                         Register
                                     </a>
