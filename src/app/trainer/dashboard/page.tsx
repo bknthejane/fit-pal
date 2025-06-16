@@ -55,7 +55,7 @@ const TrainerDashboard: React.FC = () => {
     <div className={styles.Container}>
       <Card className={styles.BannerCard}>
         <h2 className={styles.BannerTitle}>Welcome back, {trainerInfo.name}!</h2>
-        <p className={styles.BannerText}>Here's your training overview for today</p>
+        <p className={styles.BannerText}>Here&apos;s your training overview for today</p>
       </Card>
 
       <div className={styles.SectionWrapper}>
