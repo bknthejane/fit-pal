@@ -5,27 +5,46 @@ import { Button, Checkbox, Form, Input, Radio } from 'antd';
 import { useStyles } from './style/style';
 import Navbar from '@/app/components/navbar/page';
 import Footer from '@/app/components/footer/page';
+import { useUserState, useUserActions } from '@/providers/authProvider';
+import { IUser } from '@/providers/authProvider/context';
 
 
 const SignupPage: React.FC = () => {
 
     const { styles } = useStyles();
+    const { registerUser } = useUserActions();
+    const { isPending, isError } = useUserState();
 
-    type FieldType = {
-        name?: string;
-        email?: string;
-        contactNumber?: string;
-        password?: string;
-        confirmPassword?: string;
-        userType?: 'trainer' | 'client';
-        acceptPolicies?: boolean;
-    };
+    if (isPending) {
+        return(
+            <div>Loading...</div>
+        )
+    }
 
-    const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+    if (isError) {
+        return(
+            <div>Error registering user</div>
+        )
+    }
+
+    const onFinish: FormProps<IUser>['onFinish'] = (values) => {
         console.log('Success:', values);
+        const newUser: IUser = {
+            name: values.name,
+            email: values.email,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            role: values.role,
+            contactNumber: values.contactNumber,
+            planType: 'base',
+            activeState: true,
+            trial: false,
+            policiesAccepted: values.policiesAccepted
+        }
+        registerUser(newUser)
     };
 
-    const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+    const onFinishFailed: FormProps<IUser>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
@@ -53,18 +72,18 @@ const SignupPage: React.FC = () => {
                         >
                             <div className={styles.UserTypeSection}>
                                 <label className={styles.UserTypeLabel}><strong>I am a:</strong></label>
-                                <Form.Item<FieldType>
-                                    name='userType'
+                                <Form.Item<IUser>
+                                    name='role'
                                     className={styles.UserTypeFormItem}
                                 >
                                     <Radio.Group>
-                                        <Radio value='trainer' className={styles.RadioOption}>Trainer</Radio>
+                                        <Radio value='admin' className={styles.RadioOption}>Admin</Radio>
                                         <Radio value='client' className={styles.RadioOption}>Client</Radio>
                                     </Radio.Group>
                                 </Form.Item>
                             </div>
 
-                            <Form.Item<FieldType>
+                            <Form.Item<IUser>
                                 label={<span className={styles.FieldLabel}>Name</span>}
                                 name="name"
                                 rules={[{ required: true, message: 'Please input your name!' }]}
@@ -73,7 +92,7 @@ const SignupPage: React.FC = () => {
                                 <Input placeholder="John Doe" size="large" className={styles.Input} />
                             </Form.Item>
 
-                            <Form.Item<FieldType>
+                            <Form.Item<IUser>
                                 label={<span className={styles.FieldLabel}>Email</span>}
                                 name="email"
                                 rules={[
@@ -85,7 +104,7 @@ const SignupPage: React.FC = () => {
                                 <Input placeholder="you@example.com" size="large" className={styles.Input} />
                             </Form.Item>
 
-                            <Form.Item<FieldType>
+                            <Form.Item<IUser>
                                 label={<span className={styles.FieldLabel}>Contact Number</span>}
                                 name="contactNumber"
                                 rules={[{ required: true, message: 'Please input your contact number!' }]}
@@ -94,7 +113,7 @@ const SignupPage: React.FC = () => {
                                 <Input placeholder="+27 12 345 6789" size="large" className={styles.Input} />
                             </Form.Item>
 
-                            <Form.Item<FieldType>
+                            <Form.Item<IUser>
                                 label={<span className={styles.FieldLabel}>Password</span>}
                                 name="password"
                                 rules={[{ required: true, message: 'Please input your password!' }]}
@@ -103,7 +122,7 @@ const SignupPage: React.FC = () => {
                                 <Input.Password placeholder="••••••••" size="large" className={styles.Input} />
                             </Form.Item>
 
-                            <Form.Item<FieldType>
+                            <Form.Item<IUser>
                                 label={<span className={styles.FieldLabel}>Confirm Password</span>}
                                 name="confirmPassword"
                                 dependencies={['password']}
@@ -123,8 +142,8 @@ const SignupPage: React.FC = () => {
                                 <Input.Password placeholder="••••••••" size="large" className={styles.Input} />
                             </Form.Item>
 
-                            <Form.Item<FieldType>
-                                name="acceptPolicies"
+                            <Form.Item<IUser>
+                                name="policiesAccepted"
                                 valuePropName="checked"
                                 rules={[
                                     {

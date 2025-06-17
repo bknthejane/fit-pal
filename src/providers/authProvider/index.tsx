@@ -1,0 +1,75 @@
+'use client';
+
+import React, { useContext, useReducer } from 'react';
+import { AuthReducer } from './reducer';
+import { INITIAL_STATE, IUser, AuthActionContext, AuthStateContext } from './context';
+import { loginUserPending, loginUserSuccess, loginUserError, registerUserPending, registerUserSuccess, registerUserError } from './actions';
+import { axiosInstance } from '@/utils/axiosInstance';
+import { jwtDecode } from 'jwt-decode';
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+    const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
+    const instance = axiosInstance();
+
+    const loginUser = async (user: IUser) => {
+        dispatch(loginUserPending());
+
+        const loginEndpoint = 'users/login';
+        // const currentUserEndpoint = '/current';
+
+        await instance.post(loginEndpoint, user)
+            .then(async (response) => {
+                dispatch(loginUserSuccess(response.data));
+                const token = response.data.data.token;
+                const decodedToken = jwtDecode(token)
+
+                if (token) {
+                    sessionStorage.setItem('token', JSON.stringify(decodedToken));
+                }
+            })
+            .catch(error => {
+                console.log(error.message)
+                dispatch(loginUserError())
+            })
+    }
+
+    const registerUser = async (user: IUser) => {
+        dispatch(registerUserPending());
+
+        const registerEndpoint = 'users/register';
+
+        await instance.post(registerEndpoint, user)
+            .then((response) => {
+                dispatch(registerUserSuccess(response.data))
+            })
+            .catch((error => {
+                console.log(error.response)
+                dispatch(registerUserError())
+                console.log(error.message)
+            }))
+    }
+
+    return (
+        <AuthStateContext.Provider value={state}>
+            <AuthActionContext.Provider value={{ loginUser, registerUser }}>
+                {children}
+            </AuthActionContext.Provider>
+        </AuthStateContext.Provider>
+    )
+}
+
+export const useUserState = () => {
+    const context = useContext(AuthStateContext);
+    if (!context) {
+        throw new Error('useUserState must be used within a UserProvider');
+    }
+    return context;
+}
+
+export const useUserActions = () => {
+    const context = useContext(AuthActionContext);
+    if (!context) {
+        throw new Error('useUserState must be used within a UserProvider')
+    }
+    return context;
+}
