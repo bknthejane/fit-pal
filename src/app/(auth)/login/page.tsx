@@ -5,22 +5,43 @@ import { Button, Form, Input} from 'antd';
 import { useStyles } from './style/style';
 import Navbar from '@/app/components/navbar/page';
 import Footer from '@/app/components/footer/page';
+import { IUser } from '@/providers/authProvider/context';
+import { useRouter } from 'next/navigation';
+import { useUserActions, useUserState } from '@/providers/authProvider';
 
 
 const LoginPage: React.FC = () => {
 
     const { styles } = useStyles();
+    const { loginUser } = useUserActions();
+    const { isPending, isError } = useUserState(); 
+    const router = useRouter();
 
-    type FieldType = {
-        email?: string;
-        password?: string;
-    };
+    if (isPending) {
+        return (
+            <div>Loading...</div>
+        )
+    }
 
-    const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+    if (isError) {
+        return (
+            <div>Error registering user</div>
+        )
+    }
+
+    const onFinish: FormProps<IUser>['onFinish'] = (values) => {
         console.log('Success:', values);
+
+        const userDetails: IUser = {
+            email: values.email,
+            password: values.password
+        }
+
+        loginUser(userDetails);
+        router.push('/')
     };
 
-    const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+    const onFinishFailed: FormProps<IUser>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
@@ -46,7 +67,7 @@ const LoginPage: React.FC = () => {
                             onFinishFailed={onFinishFailed}
                             autoComplete='off'
                         >
-                            <Form.Item<FieldType>
+                            <Form.Item<IUser>
                                 label={<span className={styles.FieldLabel}>Email</span>}
                                 name="email"
                                 rules={[
@@ -58,7 +79,7 @@ const LoginPage: React.FC = () => {
                                 <Input placeholder="you@example.com" size="large" className={styles.Input} />
                             </Form.Item>
 
-                            <Form.Item<FieldType>
+                            <Form.Item<IUser>
                                 label={<span className={styles.FieldLabel}>Password</span>}
                                 name="password"
                                 rules={[{ required: true, message: 'Please input your password!' }]}
