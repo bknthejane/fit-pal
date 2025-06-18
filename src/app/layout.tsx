@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/providers/authProvider";
 import { ClientProvider } from "@/providers/clientProvider";
+import { FoodProvider } from "@/providers/foodItemsProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,11 +28,13 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <ClientProvider>
-        <html lang="en">
+        <FoodProvider>
+          <html lang="en">
           <body className={`${geistSans.variable} ${geistMono.variable}`}>
             {children}
           </body>
         </html>
+        </FoodProvider>
       </ClientProvider>
     </AuthProvider>
   );

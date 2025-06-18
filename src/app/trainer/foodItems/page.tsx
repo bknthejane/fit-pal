@@ -1,99 +1,50 @@
 'use client';
-import React, { useState } from 'react';
-import { Button, Card, Input } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Button, Card, Input, Pagination } from 'antd';
 import { ArrowLeftOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useStyles } from './style/style';
-
-const MOCK_FOOD_ITEMS = [
-    {
-        _id: "1",
-        name: "Grilled Chicken Breast",
-        protein: 31,
-        carbs: 0,
-        fat: 3.6,
-        energy: 165,
-        category: "protein",
-        servingSize: 100,
-    },
-    {
-        _id: "2",
-        name: "Brown Rice",
-        protein: 2.6,
-        carbs: 23,
-        fat: 0.9,
-        energy: 111,
-        category: "grains",
-        servingSize: 100,
-    },
-    {
-        _id: "3",
-        name: "Broccoli",
-        protein: 2.8,
-        carbs: 7,
-        fat: 0.4,
-        energy: 34,
-        category: "veg",
-        servingSize: 100,
-    },
-    {
-        _id: "4",
-        name: "Greek Yogurt",
-        protein: 10,
-        carbs: 4,
-        fat: 0.4,
-        energy: 59,
-        category: "dairy",
-        servingSize: 100,
-    },
-    {
-        _id: "5",
-        name: "Banana",
-        protein: 1.1,
-        carbs: 23,
-        fat: 0.3,
-        energy: 89,
-        category: "fruit",
-        servingSize: 100,
-    },
-    {
-        _id: "6",
-        name: "Salmon Fillet",
-        protein: 25,
-        carbs: 0,
-        fat: 12,
-        energy: 208,
-        category: "protein",
-        servingSize: 100,
-    },
-];
-
-
+import { useFoodActions, useFoodState } from '@/providers/foodItemsProvider';
+import { useRouter } from 'next/navigation';
 
 const FoodItemsPage: React.FC = () => {
-
-    interface FoodItem {
-        _id: string;
-        name: string;
-        protein: number;
-        carbs: number;
-        fat: number;
-        energy: number;
-        category: string;
-        servingSize: number;
-    }
+    const { foods } = useFoodState();
+    const { getFoods } = useFoodActions();
     const { styles } = useStyles();
-    const [foodItems] = useState<FoodItem[]>(MOCK_FOOD_ITEMS);
-    const [showCreateForm, setShowCreateForm] = useState(false);
+    const router = useRouter();
+    
     const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 15;
+
+    useEffect(() => {
+        getFoods();
+    }, ['']);
 
     const handleBackToDashboard = () => {
-        console.log('Navigate back to dashboard');
+        router.push('/trainer/dashboard');
     };
 
-    const filteredFoodItems = foodItems.filter((item) =>
+    const handleAddFood = () => {
+        router.push('/trainer/createFoodItem');
+    };
+
+    const filteredFoodItems = (foods || []).filter((item) =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const totalItems = filteredFoodItems.length;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentItems = filteredFoodItems.slice(startIndex, endIndex);
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
 
     return (
         <div className={styles.PageWrapper}>
@@ -110,7 +61,7 @@ const FoodItemsPage: React.FC = () => {
                     <Button
                         type="primary"
                         icon={<PlusOutlined />}
-                        onClick={() => setShowCreateForm(!showCreateForm)}
+                        onClick={handleAddFood}
                     >
                         Add Food Item
                     </Button>
@@ -131,8 +82,8 @@ const FoodItemsPage: React.FC = () => {
                     }
                 >
                     <div className={styles.Grid}>
-                        {filteredFoodItems.map((item) => (
-                            <Card key={item._id} size="small">
+                        {currentItems.map((item) => (
+                            <Card key={item.id} size="small">
                                 <h3 className={styles.CardTitle}>{item.name}</h3>
                                 <div className={styles.CardDetails}>
                                     <p><strong>Category:</strong> {item.category}</p>
@@ -145,6 +96,22 @@ const FoodItemsPage: React.FC = () => {
                             </Card>
                         ))}
                     </div>
+                    
+                    {totalItems > itemsPerPage && (
+                        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                            <Pagination
+                                current={currentPage}
+                                total={totalItems}
+                                pageSize={itemsPerPage}
+                                onChange={handlePageChange}
+                                showSizeChanger={false}
+                                showQuickJumper
+                                showTotal={(total, range) => 
+                                    `${range[0]}-${range[1]} of ${total} items`
+                                }
+                            />
+                        </div>
+                    )}
                 </Card>
             </div>
         </div>
