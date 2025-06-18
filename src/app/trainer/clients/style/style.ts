@@ -1,125 +1,61 @@
 import { createStyles, css } from 'antd-style';
 
 export const useStyles = createStyles({
-  ClientsContainer: css`
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+  PageWrapper: css`
+    min-height: 100vh;
+    background-color: #f5f5f5;
   `,
-
-  TopBar: css`
+  Navbar: css`
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e8e8e8;
+    padding: 0 24px;
+  `,
+  NavContent: css`
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 64px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
   `,
-
-  Heading: css`
-    font-size: 20px;
-    font-weight: 700;
-    color: #1f2937;
+  BackButton: css`
+    color: #666;
   `,
-
-  AddButton: css`
-    background-color: #2563eb;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    &:hover {
-      background-color: #1e40af;
-    }
+  ContentWrapper: css`
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
   `,
-
-  TableWrapper: css`
-    overflow-x: auto;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  `,
-
-  SearchWrapper: css`
-    padding: 16px;
-    border-bottom: 1px solid #f0f0f0;
-  `,
-
   SearchInput: css`
-    width: 100%;
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #d9d9d9;
+    width: 300px;
+  `,
+  Grid: css`
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  `,
+  CardTitle: css`
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 600;
+  `,
+  CardDetails: css`
     font-size: 14px;
-    &:focus {
-      outline: none;
-      border-color: #1677ff;
-      box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.2);
+    line-height: 1.6;
+    p {
+      margin: 4px 0;
     }
   `,
-
-  Table: css`
-    width: 100%;
-    border-collapse: collapse;
+  LoadingWrapper: css`
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   `,
-
-  TableHead: css`
-    background-color: #fafafa;
-    text-align: left;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #888;
-  `,
-
-  TableCell: css`
-    padding: 12px 16px;
-    font-size: 14px;
-    color: #333;
-    vertical-align: middle;
-  `,
-
-  Row: css`
-    border-bottom: 1px solid #f0f0f0;
-    &:hover {
-      background-color: #f9fafb;
-    }
-  `,
-
-  StatusBadgeActive: css`
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #065f46;
-    background-color: #d1fae5;
-    display: inline-block;
-  `,
-
-  StatusBadgeInactive: css`
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #7f1d1d;
-    background-color: #fee2e2;
-    display: inline-block;
-  `,
-
-  ActionButtonBlue: css`
-    color: #2563eb;
-    cursor: pointer;
-    font-size: 14px;
-    margin-right: 12px;
-    &:hover {
-      text-decoration: underline;
-    }
-  `,
-
-  ActionButtonRed: css`
-    color: #dc2626;
-    cursor: pointer;
-    font-size: 14px;
-    &:hover {
-      text-decoration: underline;
+  Form: css`
+    .ant-form-item {
+      margin-bottom: 16px;
     }
   `,
 });
