@@ -20,7 +20,6 @@ import { useUserState } from "../authProvider";
 export const ClientProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(ClientReducer, INITIAL_STATE);
     const instance = axiosInstance();
-    const { user } = useUserState()
 
     const getClients = async () => {
 
