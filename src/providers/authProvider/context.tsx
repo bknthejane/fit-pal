@@ -7,6 +7,7 @@ export interface IUser {
     password?: string;
     confirmPassword?: string;
     role?: string;
+    dateOfBirth?: string;
     contactNumber?: string;
     planType?: string;
     activeState?: boolean;
