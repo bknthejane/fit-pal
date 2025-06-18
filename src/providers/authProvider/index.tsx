@@ -11,6 +11,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
     const instance = axiosInstance();
 
+      interface IToken {
+        id: string;
+        name?: string;
+        role: string;
+        features?: string[];
+        iat?: number;
+        exp?: string;
+    }
+
     const loginUser = async (user: IUser) => {
         dispatch(loginUserPending());
 
@@ -20,12 +29,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         await instance.post(loginEndpoint, user)
             .then(async (response) => {
                 dispatch(loginUserSuccess(response.data));
-                const token = response.data.data.token;
-                const decodedToken = jwtDecode(token)
+                sessionStorage.setItem('token', response.data.data.token);
+                 const token = jwtDecode<IToken>(JSON.stringify(response.data.data.token));
 
-                if (token) {
-                    sessionStorage.setItem('token', JSON.stringify(decodedToken));
-                }
+                sessionStorage.setItem('userRole', token.role)
+                sessionStorage.setItem('userId', token.id)
             })
             .catch(error => {
                 console.log(error.message)

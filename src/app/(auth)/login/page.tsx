@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import type { FormProps } from 'antd';
-import { Button, Form, Input} from 'antd';
+import { Button, Form, Input } from 'antd';
 import { useStyles } from './style/style';
 import Navbar from '@/app/components/navbar/page';
 import Footer from '@/app/components/footer/page';
@@ -14,7 +14,7 @@ const LoginPage: React.FC = () => {
 
     const { styles } = useStyles();
     const { loginUser } = useUserActions();
-    const { isPending, isError } = useUserState(); 
+    const { isPending, isError, isSuccess, user } = useUserState();
     const router = useRouter();
 
     if (isPending) {
@@ -29,6 +29,14 @@ const LoginPage: React.FC = () => {
         )
     }
 
+    if (isSuccess) {
+        if (user?.role === 'admin') {
+            router.push('/trainer/clients');
+        } else {
+            router.push('/')
+        }
+    }
+
     const onFinish: FormProps<IUser>['onFinish'] = (values) => {
         console.log('Success:', values);
 
@@ -38,7 +46,7 @@ const LoginPage: React.FC = () => {
         }
 
         loginUser(userDetails);
-        router.push('/')
+        router.push('/trainer/dashboard')
     };
 
     const onFinishFailed: FormProps<IUser>['onFinishFailed'] = (errorInfo) => {
@@ -112,7 +120,7 @@ const LoginPage: React.FC = () => {
                     </div>
                 </main>
 
-                <Footer/>
+                <Footer />
             </div>
         </>
     )

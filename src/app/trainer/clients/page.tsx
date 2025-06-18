@@ -1,21 +1,36 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStyles } from './style/style';
+import { useClientActions, useClientState } from '@/providers/clientProvider';
 
 const ClientPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const { styles } = useStyles();
 
-    const mockClients = [
-        {
-            id: "1",
-            fullName: "test-client-name-surname",
-            email: "client2@client2.com",
-            contactNumber: "27711233221",
-            sex: "male",
-            activeState: true
-        }
-    ];
+    const { clients, isPending, isError } = useClientState();
+    const { getClients} = useClientActions();
+
+    useEffect(() => {
+        getClients();
+    }, ['']);
+
+    if (isPending) {
+        return (
+            <div>Loading Clients...</div>
+        )
+    }
+
+    if (isError) {
+        return (
+            <div>Error loading clients!</div>
+        )
+    }
+
+    if (!clients || clients.length === 0) {
+        return (
+            <div>No clients found</div>
+        )
+    }
 
     return (
         <>
@@ -44,11 +59,10 @@ const ClientPage: React.FC = () => {
                                 <th className={styles.TableCell}>Contact</th>
                                 <th className={styles.TableCell}>Gender</th>
                                 <th className={styles.TableCell}>Status</th>
-                                <th className={styles.TableCell}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {mockClients.map((client) => (
+                            {clients.map((client) => (
                                 <tr key={client.id} style={{ borderBottom: '1px solid #f0f0f0' }}>
                                     <td className={styles.TableCell}>{client.fullName}</td>
                                     <td className={styles.TableCell}>{client.email}</td>
@@ -60,8 +74,6 @@ const ClientPage: React.FC = () => {
                                         </span>
                                     </td>
                                     <td className={styles.TableCell}>
-                                        <span className={styles.ActionButtonBlue}>Edit</span>
-                                        <span className={styles.ActionButtonRed}>Delete</span>
                                     </td>
                                 </tr>
                             ))}
