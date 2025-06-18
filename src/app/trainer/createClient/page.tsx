@@ -1,29 +1,32 @@
 "use client";
 
 import React from "react";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, message } from "antd";
 import type { FormProps } from "antd";
 import { useStyles } from "./style/style";
-
-type FieldType = {
-  fullName: string;
-  email: string;
-  contactNumber: string;
-  sex: string;
-  dateOfBirth: string;
-  activeState: boolean;
-};
+import { IClient } from '@/providers/clientProvider/context';
+import { useClientActions } from "@/providers/clientProvider";
 
 const CreateClientPage: React.FC = () => {
   const { styles } = useStyles();
   const { Option } = Select;
+  const { createClient } = useClientActions()
+  const [form] = Form.useForm();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    console.log("Success:", values);
+  const onFinish: FormProps<IClient>["onFinish"] = async (values) => {
+    try {
+      const trainerId = sessionStorage.getItem("userId") || "";
+      const clientData = { ...values, trainerId };
+      createClient(clientData);
+      form.resetFields();
+    } catch (error) {
+      console.log("Form submission failed:", error);
+    }
   };
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+  const onFinishFailed: FormProps<IClient>["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
+    message.error('Please check all required fields');
   };
 
   return (
@@ -34,6 +37,7 @@ const CreateClientPage: React.FC = () => {
 
       <div className={styles.FormWrapper}>
         <Form
+          form={form}
           name="create-client"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
@@ -42,31 +46,34 @@ const CreateClientPage: React.FC = () => {
           autoComplete="off"
           className={styles.Form}
         >
-          <Form.Item<FieldType>
+          <Form.Item<IClient>
             label="Full Name"
             name="fullName"
             rules={[{ required: true, message: "Please input the full name!" }]}
           >
-            <Input />
+            <Input placeholder="Enter full name" />
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<IClient>
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please input the email!" }]}
+            rules={[
+              { required: true, message: "Please input the email!" },
+              { type: 'email', message: 'Please enter a valid email!' }
+            ]}
           >
-            <Input />
+            <Input placeholder="Enter email address" />
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<IClient>
             label="Contact Number"
             name="contactNumber"
             rules={[{ required: true, message: "Please input the contact number!" }]}
           >
-            <Input />
+            <Input placeholder="Enter contact number" />
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<IClient>
             name="sex"
             label="Sex"
             rules={[{ required: true, message: "Please select the sex!" }]}
@@ -74,11 +81,10 @@ const CreateClientPage: React.FC = () => {
             <Select placeholder="Select gender">
               <Option value="male">Male</Option>
               <Option value="female">Female</Option>
-              <Option value="other">Other</Option>
             </Select>
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<IClient>
             label="Date of Birth"
             name="dateOfBirth"
             rules={[{ required: true, message: "Please input the date of birth!" }]}
@@ -86,10 +92,10 @@ const CreateClientPage: React.FC = () => {
             <Input type="date" />
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<IClient>
             label="Active State"
             name="activeState"
-            rules={[{ required: true, message: "Please input the active state!" }]}
+            rules={[{ required: true, message: "Please select the active state!" }]}
           >
             <Select placeholder="Select status">
               <Option value={true}>Active</Option>
