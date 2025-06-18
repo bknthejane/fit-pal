@@ -1,5 +1,5 @@
 import { handleActions } from "redux-actions"
-import { INITIAL_STATE, type IFoodStateContext } from "./context"
+import { INITIAL_STATE, IFoodStateContext } from "./context"
 import { FoodActionEnums } from "./actions"
 
 export const FoodReducer = handleActions<IFoodStateContext, IFoodStateContext>(
