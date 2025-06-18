@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { Card, Button, Divider } from 'antd';
-import { PlusOutlined, FileTextOutlined, AppstoreOutlined, EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined } from '@ant-design/icons';
 import { useStyles } from './style/style';
+import { useRouter } from 'next/navigation';
 
 const TrainerDashboard: React.FC = () => {
   const { styles } = useStyles();
+  const router = useRouter();
 
   const trainerInfo = {
     name: 'test trainer 2',
@@ -50,6 +52,11 @@ const TrainerDashboard: React.FC = () => {
       servingSize: '100g',
     },
   ];
+  
+  const handleViewClient = () => {
+    router.push('/trainer/clients')
+  }
+
 
   return (
     <div className={styles.Container}>
@@ -80,7 +87,7 @@ const TrainerDashboard: React.FC = () => {
 
       <Divider orientation="left">Quick Actions</Divider>
       <div className={styles.ButtonGrid}>
-        <Button icon={<PlusOutlined />} className={styles.ActionButton}>
+        {/* <Button icon={<PlusOutlined />} className={styles.ActionButton}>
           Add Client
         </Button>
         <Button icon={<FileTextOutlined />} className={styles.ActionButton}>
@@ -88,8 +95,8 @@ const TrainerDashboard: React.FC = () => {
         </Button>
         <Button icon={<AppstoreOutlined />} className={styles.ActionButton}>
           Manage Food Items
-        </Button>
-        <Button icon={<EyeOutlined />} className={styles.ActionButton}>
+        </Button> */}
+        <Button onClick={handleViewClient} icon={<EyeOutlined />} className={styles.ActionButton}>
           View All Clients
         </Button>
       </div>

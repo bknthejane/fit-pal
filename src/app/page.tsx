@@ -23,7 +23,7 @@ export default function Home() {
               manage clients, create customized meal plans, and track <br />
               progress all in one place.
             </p>
-            <Link href="#" className={styles.Button}>
+            <Link href="/signup" className={styles.Button}>
               Get started
             </Link>
           </div>

@@ -15,11 +15,11 @@ const Navbar: React.FC = () => {
                 </div>
 
                 <div className={styles.Buttons}>
-                    <Link href='#'>
+                    <Link href='/login'>
                         <Button type='default'>Login</Button>
                     </Link>
 
-                    <Link href='#'>
+                    <Link href='/signup'>
                         <Button type='primary'>Register</Button>
                     </Link>
                 </div>
