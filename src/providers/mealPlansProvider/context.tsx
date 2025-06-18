@@ -9,9 +9,9 @@ export interface IMealPlan {
   description: string
   notes?: string
   clientNotes?: string
-  meals?: any[]
-  mealTotals?: any
-  base?: any
+  meals?: string[]
+  mealTotals?: string
+  base?: string
 }
 
 export interface IMealPlanStateContext {
@@ -26,7 +26,7 @@ export interface IMealPlanActionContext {
   getMealPlans: () => void
   getMealPlan: (id: string) => void
   getClientMealPlans: (clientId: string) => void
-  createMealPlan: (mealPlan: any) => void
+  createMealPlan: (mealPlan: string) => void
 }
 
 export const INITIAL_STATE: IMealPlanStateContext = {
