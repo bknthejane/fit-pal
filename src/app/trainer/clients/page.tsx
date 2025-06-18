@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useStyles } from './style/style';
 import { useClientActions, useClientState } from '@/providers/clientProvider';
+import { useRouter } from 'next/navigation';
 
 const ClientPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const { styles } = useStyles();
+    const router = useRouter();
 
     const { clients, isPending, isError } = useClientState();
     const { getClients} = useClientActions();
@@ -31,13 +33,16 @@ const ClientPage: React.FC = () => {
             <div>No clients found</div>
         )
     }
+      const handleCreateClient = () => {
+    router.push('/trainer/createClient')
+  }
 
     return (
         <>
             <div className={styles.ClientsContainer}>
                 <div className={styles.TopBar}>
                     <h2>Client Management</h2>
-                    <button className={styles.AddButton}>Add Client</button>
+                    <button onClick={handleCreateClient} className={styles.AddButton}>Add Client</button>
                 </div>
 
                 <div className={styles.TableWrapper}>
