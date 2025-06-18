@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 export interface IFood {
     id?: string
-    name?: string
+    name: string
     protein?: number
     carbs?: number
     sugar?: number
@@ -10,7 +10,7 @@ export interface IFood {
     fiber?: number
     sodium?: number
     potassium?: number
-    category?: string
+    category: string
     servingSize?: number
     cholesterol?: number
     energy?: number
@@ -26,9 +26,9 @@ export interface IFoodStateContext {
 
 export interface IFoodActionContext {
     getFoods: () => void;
-    getFood: (id: string) => void;
-    searchFoods: (term: string) => void;
-    getFoodsByCategory: (category: string) => void;
+    // getFood: (id: string) => void;
+    // searchFoods: (term: string) => void;
+    // getFoodsByCategory: (category: string) => void;
     createFood: (food: IFood) => void;
 }
 
