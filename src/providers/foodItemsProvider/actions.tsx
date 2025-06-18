@@ -1,5 +1,5 @@
 import { createAction } from "redux-actions"
-import type { IFoodStateContext, IFood } from "./context"
+import { IFoodStateContext, IFood } from "./context"
 
 export enum FoodActionEnums {
     getFoodsPending = "GET_FOODS_PENDING",
