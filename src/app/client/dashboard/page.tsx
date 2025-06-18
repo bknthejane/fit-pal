@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useStyles } from './style/style'; // adjust the path if needed
+import { useStyles } from './style/style';
 
 const ClientDashboard: React.FC = () => {
   const { styles } = useStyles();
