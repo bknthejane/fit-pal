@@ -1,32 +1,38 @@
-import { createStyles, css } from "antd-style";
+import { createStyles, css } from 'antd-style';
 
 export const useStyles = createStyles({
   PageWrapper: css`
     min-height: 100vh;
-    background-color: #f9fafb;
-    padding: 24px;
+    background-color: #f5f5f5;
   `,
-  NavBar: css`
-    background-color: #fff;
-    padding: 16px 24px;
-    border-bottom: 1px solid #e5e7eb;
-    margin-bottom: 24px;
+  Navbar: css`
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e8e8e8;
+    padding: 0 24px;
   `,
-  NavTitle: css`
-    font-size: 20px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0;
-  `,
-  FormWrapper: css`
-    max-width: 700px;
+  NavContent: css`
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 24px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  `,
+  BackButton: css`
+    color: #666;
+  `,
+  ContentWrapper: css`
+    max-width: 800px;
+    margin: 24px auto;
+    padding: 0 24px;
+  `,
+  SearchInput: css`
+    width: 300px;
   `,
   Form: css`
-    width: 100%;
-  `
+    .ant-form-item {
+      margin-bottom: 16px;
+    }
+  `,
 });

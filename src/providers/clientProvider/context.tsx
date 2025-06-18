@@ -2,9 +2,9 @@ import { createContext } from 'react';
 
 export interface IClient {
     id?: string,
-    fullName?: string,
-    email?: string,
-    contactNumber?: string,
+    fullName: string,
+    email: string,
+    contactNumber: string,
     sex?: string,
     dateOfBirth?: string,
     activeState?: boolean,
