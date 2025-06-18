@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useStyles } from './style/style';
 import { useClientActions, useClientState } from '@/providers/clientProvider';
-import { IClient } from '@/providers/clientProvider/context';
 
 const ClientPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -13,7 +12,7 @@ const ClientPage: React.FC = () => {
 
     useEffect(() => {
         getClients();
-    }, []);
+    }, ['']);
 
     if (isPending) {
         return (
@@ -32,17 +31,6 @@ const ClientPage: React.FC = () => {
             <div>No clients found</div>
         )
     }
-
-    // const mockClients = [
-    //     {
-    //         id: "1",
-    //         fullName: "test-client-name-surname",
-    //         email: "client2@client2.com",
-    //         contactNumber: "27711233221",
-    //         sex: "male",
-    //         activeState: true
-    //     }
-    // ];
 
     return (
         <>
@@ -71,7 +59,6 @@ const ClientPage: React.FC = () => {
                                 <th className={styles.TableCell}>Contact</th>
                                 <th className={styles.TableCell}>Gender</th>
                                 <th className={styles.TableCell}>Status</th>
-                                <th className={styles.TableCell}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
