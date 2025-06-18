@@ -15,7 +15,6 @@ import {
     createClientError
 } from "./actions";
 import axios from 'axios';
-import { useUserState } from "../authProvider";
 
 export const ClientProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(ClientReducer, INITIAL_STATE);
