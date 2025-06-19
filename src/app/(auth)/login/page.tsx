@@ -1,31 +1,18 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import type { FormProps } from 'antd';
 import { Button, Form, Input } from 'antd';
 import { useStyles } from './style/style';
 import Navbar from '@/app/components/navbar/page';
 import Footer from '@/app/components/footer/page';
 import { IUser } from '@/providers/authProvider/context';
-import { useRouter } from 'next/navigation';
 import { useUserActions, useUserState } from '@/providers/authProvider';
 
 const LoginPage: React.FC = () => {
     const { styles } = useStyles();
     const { loginUser } = useUserActions();
-    const { isPending, isError, isSuccess } = useUserState();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (isSuccess) {
-            const role = sessionStorage.getItem('userRole');
-            if (role === 'admin') {
-                router.push('/trainer/dashboard');
-            } else {
-                router.push('/client/dashboard');
-            }
-        }
-    }, [isSuccess, router]);
+    const { isPending, isError } = useUserState();
 
     const onFinish: FormProps<IUser>['onFinish'] = (values) => {
         const userDetails: IUser = {

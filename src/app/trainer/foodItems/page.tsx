@@ -21,7 +21,7 @@ const FoodItemsPage: React.FC = () => {
     }, ['']);
 
     const handleBackToDashboard = () => {
-        router.push('/trainer/dashboard');
+        router.push('/trainer');
     };
 
     const handleAddFood = () => {

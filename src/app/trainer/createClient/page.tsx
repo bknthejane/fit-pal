@@ -21,12 +21,10 @@ const CreateClientPage: React.FC = () => {
       const trainerId = sessionStorage.getItem("userId") || "";
       const clientData = { ...values, trainerId };
 
-      await createClient(clientData); // Ensure this returns a Promise
-
+      await createClient(clientData);
       message.success("Client created successfully");
       form.resetFields();
 
-      // Directly redirect after creation
       router.push('/trainer/clients');
     } catch (error) {
       console.error("Client creation failed:", error);
