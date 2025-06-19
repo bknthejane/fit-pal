@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
             if (role === 'admin') {
                 router.push('/trainer/dashboard');
             } else {
-                router.push('/');
+                router.push('/client/dashboard');
             }
         }
     }, [isSuccess, router]);
@@ -101,7 +101,7 @@ const LoginPage: React.FC = () => {
                                     <div className={styles.RegisterLinkContainer}>
                                         <p className={styles.RegisterLinkText}>
                                             Don&apos;t have an account?{' '}
-                                            <a href="/register" className={styles.RegisterLink}>
+                                            <a href="/signup" className={styles.RegisterLink}>
                                                 Register
                                             </a>
                                         </p>

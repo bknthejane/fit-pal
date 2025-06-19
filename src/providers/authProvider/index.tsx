@@ -13,18 +13,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       interface IToken {
         id: string;
-        name?: string;
+        name: string;
         role: string;
-        features?: string[];
-        iat?: number;
-        exp?: string;
+
     }
 
     const loginUser = async (user: IUser) => {
         dispatch(loginUserPending());
 
         const loginEndpoint = 'users/login';
-        // const currentUserEndpoint = '/current';
 
         await instance.post(loginEndpoint, user)
             .then(async (response) => {
@@ -34,6 +31,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
                 sessionStorage.setItem('userRole', token.role)
                 sessionStorage.setItem('userId', token.id)
+                sessionStorage.setItem('name', token.name)
             })
             .catch(error => {
                 console.log(error.message)

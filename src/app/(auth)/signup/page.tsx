@@ -183,7 +183,7 @@ const SignupPage: React.FC = () => {
               <div className={styles.LoginLinkContainer}>
                 <p className={styles.LoginLinkText}>
                   Already have an account?{' '}
-                  <a href="#" className={styles.LoginLink}>
+                  <a href="/login" className={styles.LoginLink}>
                     Log in
                   </a>
                 </p>

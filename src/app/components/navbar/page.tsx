@@ -11,7 +11,9 @@ const Navbar: React.FC = () => {
         <>
             <nav className={styles.Navbar}>
                 <div className={styles.Logo}>
-                    <a href='#'><li>FitPal</li></a>
+                    <Link href="/" className={styles.LogoLink}>
+                        FitPal
+                    </Link>
                 </div>
 
                 <div className={styles.Buttons}>

@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Card, Form, Input, Select } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import type { FormProps } from 'antd';
@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 
 
 const CreateFoodItem: React.FC = () => {
-    const { isPending, isSuccess } = useFoodState();
+    const { isPending } = useFoodState();
     const { createFood } = useFoodActions();
     const router = useRouter();
 
@@ -23,14 +23,7 @@ const CreateFoodItem: React.FC = () => {
         router.push('/trainer/foodItems');
     };
 
-    useEffect(() => {
-        if (isSuccess) {
-            router.push('/trainer/foodItems');
-        }
-    }, [isSuccess]);
-
     const onFinish: FormProps<IFood>["onFinish"] = async (values) => {
-        console.log("Success:", values);
         const newFoodItem = {
             name: values.name,
             protein: values.protein,
@@ -143,30 +136,35 @@ const CreateFoodItem: React.FC = () => {
                             <Form.Item<IFood>
                                 name="sugar"
                                 label="Sugar (g)"
+                                rules={[{ required: true }]}
                             >
                                 <Input type="number" step="0.1" />
                             </Form.Item>
                             <Form.Item<IFood>
                                 name="fiber"
                                 label="Fiber (g)"
+                                rules={[{ required: true }]}
                             >
                                 <Input type="number" step="0.1" />
                             </Form.Item>
                             <Form.Item<IFood>
                                 name="sodium"
                                 label="Sodium (mg)"
+                                rules={[{ required: true }]}
                             >
                                 <Input type="number" />
                             </Form.Item>
                             <Form.Item<IFood>
                                 name="potassium"
                                 label="Potassium (mg)"
+                                rules={[{ required: true }]}
                             >
                                 <Input type="number" />
                             </Form.Item>
                             <Form.Item<IFood>
                                 name="cholesterol" 
                                 label="Cholesterol (mg)"
+                                rules={[{ required: true }]}
                             >
                                 <Input type="number" />
                             </Form.Item>
