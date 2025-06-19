@@ -26,11 +26,11 @@ export const MealPlanProvider = ({ children }: { children: React.ReactNode }) =>
 
     const getTrainerMealPlans = async (trainerId: string) => {
         dispatch(getTrainerMealPlansPending());
-        const endpoint = `mealplan/${trainerId}`;
+        const endpoint = `mealplans/${trainerId}`;
 
         await instance.get(endpoint)
         .then((response) => {
-            dispatch(getTrainerMealPlansSuccess(response.data.data))
+            dispatch(getTrainerMealPlansSuccess(response.data.data.data))
         })
         .catch((error) => {
             console.error(error);
@@ -44,7 +44,7 @@ export const MealPlanProvider = ({ children }: { children: React.ReactNode }) =>
 
         await instance.get(endpoint)
         .then((response) => {
-            dispatch(getClientMealPlansSuccess(response.data.data))
+            dispatch(getClientMealPlansSuccess(response.data.data.data))
         })
         .catch((error) => {
             console.error(error);
@@ -66,14 +66,14 @@ export const MealPlanProvider = ({ children }: { children: React.ReactNode }) =>
         })
     }
 
-    const createMealPlan = async (mealPlan: IMealPlan) => {
+    const createMealPlan = async (trainerId: IMealPlan) => {
         dispatch(createMealPlanPending());
         const endpoint = `mealplan`;
 
-        await instance.post(endpoint, mealPlan)
+        await instance.post(endpoint, trainerId)
         .then((response) => {
-            dispatch(createMealPlanSuccess(response.data));
-            console.log(response.data);
+            dispatch(createMealPlanSuccess(response.data.data));
+            console.log(response.data.data);
         })
         .catch((error) => {
             console.error(error);

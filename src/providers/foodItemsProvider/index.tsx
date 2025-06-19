@@ -19,8 +19,10 @@ export const FoodProvider = ({ children }: { children: React.ReactNode }) => {
 
     const getFoods = async () => {
         dispatch(getFoodsPending());
+        const getFoodsEndpoint = `food`;
+        console.log(getFoodsEndpoint);
 
-        await instance.get('food')
+        await instance.get(getFoodsEndpoint)
         .then((response) => {
             dispatch(getFoodsSuccess(response.data.data));
             console.log(response.data.data);
@@ -31,19 +33,7 @@ export const FoodProvider = ({ children }: { children: React.ReactNode }) => {
         })
     }
 
-    // const getFood = async (id: string) => {
-    //     dispatch(getFoodPending());
-    //     const getFoodEndpoint = `food/${id}`;
-
-    //     await axios(getFoodEndpoint)
-    //     .then((response) => {
-    //         dispatch(getFoodSuccess(response.data.data))
-    //     })
-    //     .catch((error) => {
-    //         console.error(error);
-    //         dispatch(getFoodError());
-    //     })
-    // }
+    
 
     const createFood = async (food: IFood) => {
         dispatch(createFoodPending());
@@ -51,8 +41,8 @@ export const FoodProvider = ({ children }: { children: React.ReactNode }) => {
 
         await instance.post(createFoodEndpoint, food)
         .then((response) => {
-            dispatch(createFoodSuccess(response.data));
-            console.log(response.data);
+            dispatch(createFoodSuccess(response.data.data));
+            console.log(response.data.data)
         })
         .catch((error) => {
             console.log(error);
