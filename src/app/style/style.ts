@@ -5,40 +5,41 @@ export const useStyles = createStyles({
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 80px); /* adjust if navbar/footer present */
-    padding: 0 2rem;
-    background-color: #ffffff;
+    min-height: 80vh;
+    padding: 2rem;
+    background-color: #f9f9f9;
   `,
   Content: css`
-    max-width: 600px;
-    text-align: left;
+    text-align: center;
+    max-width: 800px;
   `,
   Heading: css`
-    font-size: 2.75rem;
-    font-weight: 800;
-    color: #000;
+    font-size: 3rem;
+    font-weight: bold;
     margin-bottom: 1rem;
-    line-height: 1.3;
+    line-height: 1.2;
   `,
   Highlight: css`
-    color: #5f35f5;
+    color: #1890ff;
   `,
   Paragraph: css`
-    color: #666;
-    font-size: 1rem;
-    line-height: 1.7;
+    font-size: 1.2rem;
+    color: #595959;
     margin-bottom: 2rem;
   `,
   Button: css`
-    background-color: #5f35f5;
+    display: inline-block;
+    background-color: #1890ff;
     color: #fff;
     padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    border-radius: 6px;
-    display: inline-block;
-    transition: background 0.3s;
+    font-size: 1rem;
+    border-radius: 4px;
+    text-decoration: none; // removes underline
+    transition: background-color 0.3s ease;
+
     &:hover {
-      background-color: #3d23a0;
+      background-color: #096dd9;
+      text-decoration: none; // ensure it stays removed on hover
     }
   `,
 });
