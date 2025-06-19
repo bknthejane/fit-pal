@@ -4,15 +4,15 @@ import { MealPlanActionEnums } from "./actions"
 
 export const MealPlanReducer = handleActions<IMealPlanStateContext, IMealPlanStateContext>(
     {
-        [MealPlanActionEnums.getMealPlansPending]: (state, action) => ({
+        [MealPlanActionEnums.getTrainerMealPlansPending]: (state, action) => ({
             ...state,
             ...action.payload,
         }),
-        [MealPlanActionEnums.getMealPlansSuccess]: (state, action) => ({
+        [MealPlanActionEnums.getTrainerMealPlansSuccess]: (state, action) => ({
             ...state,
             ...action.payload,
         }),
-        [MealPlanActionEnums.getMealPlansError]: (state, action) => ({
+        [MealPlanActionEnums.getTrainerMealPlansError]: (state, action) => ({
             ...state,
             ...action.payload,
         }),

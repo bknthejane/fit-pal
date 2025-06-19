@@ -2,9 +2,9 @@ import { createAction } from "redux-actions"
 import { IMealPlanStateContext, IMealPlan } from "./context"
 
 export enum MealPlanActionEnums {
-    getMealPlansPending = "GET_MEALPLANS_PENDING",
-    getMealPlansSuccess = "GET_MEALPLANS_SUCCESS",
-    getMealPlansError = "GET_MEALPLANS_ERROR",
+    getTrainerMealPlansPending = "GET_TRAINER_MEALPLANS_PENDING",
+    getTrainerMealPlansSuccess = "GET_TRAINER_MEALPLANS_SUCCESS",
+    getTrainerMealPlansError = "GET_TRAINER_MEALPLANS_ERROR",
 
     getMealPlanPending = "GET_MEALPLAN_PENDING",
     getMealPlanSuccess = "GET_MEALPLAN_SUCCESS",
@@ -19,16 +19,16 @@ export enum MealPlanActionEnums {
     createMealPlanError = "CREATE_MEALPLAN_ERROR",
 }
 
-export const getMealPlansPending = createAction<IMealPlanStateContext>(
-    MealPlanActionEnums.getMealPlansPending, () => ({
+export const getTrainerMealPlansPending = createAction<IMealPlanStateContext>(
+    MealPlanActionEnums.getTrainerMealPlansPending, () => ({
         isPending: true,
         isSuccess: false,
         isError: false,
     })
 )
 
-export const getMealPlansSuccess = createAction<IMealPlanStateContext, IMealPlan[]>(
-    MealPlanActionEnums.getMealPlansSuccess,
+export const getTrainerMealPlansSuccess = createAction<IMealPlanStateContext, IMealPlan[]>(
+    MealPlanActionEnums.getTrainerMealPlansSuccess,
     (mealPlans: IMealPlan[]) => ({
         isPending: false,
         isSuccess: true,
@@ -37,8 +37,8 @@ export const getMealPlansSuccess = createAction<IMealPlanStateContext, IMealPlan
     }),
 )
 
-export const getMealPlansError = createAction<IMealPlanStateContext>(
-    MealPlanActionEnums.getMealPlansError, () => ({
+export const getTrainerMealPlansError = createAction<IMealPlanStateContext>(
+    MealPlanActionEnums.getTrainerMealPlansError, () => ({
         isPending: false,
         isSuccess: false,
         isError: true,
