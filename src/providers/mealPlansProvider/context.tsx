@@ -1,17 +1,18 @@
 import { createContext } from "react"
 
 export interface IMealPlan {
+  _id: string,
   name: string;
   clientId: string;
   trainerId: string;
   clientName: string;
-  descrption: string;
+  description: string;
   notes: string;
   clientNotes: [];
   meals: [
     {
       name: string;
-      id: number;
+      _id: number;
       note: string;
       clientNotes: [];
       items: [
