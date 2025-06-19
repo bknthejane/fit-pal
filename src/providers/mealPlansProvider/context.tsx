@@ -1,17 +1,41 @@
 import { createContext } from "react"
 
 export interface IMealPlan {
-  id: string
-  name: string
-  client?: string
-  trainer?: string
-  clientName: string
-  description: string
-  notes?: string
-  clientNotes?: string
-  meals?: string[]
-  mealTotals?: string
-  base?: string
+  name: string;
+  clientId: string;
+  trainerId: string;
+  clientName: string;
+  descrption: string;
+  notes: string;
+  clientNotes: [];
+  meals: [
+    {
+      name: string;
+      id: number;
+      note: string;
+      clientNotes: [];
+      items: [
+        {
+          name: string;
+          quantity: number;
+          unit: string;
+          calories: number;
+          carbs: number;
+          protein: number;
+          fat: number;
+          note: null;
+        }
+      ];
+      itemTotals: {
+        calories: number;
+        carbs: number;
+        protein: number;
+        fat: number;
+      };
+    }
+  ];
+  mealTotals: { calories: number; carbs: number; protein: number; fat: number };
+  base: 1;
 }
 
 export interface IMealPlanStateContext {
@@ -23,10 +47,10 @@ export interface IMealPlanStateContext {
 }
 
 export interface IMealPlanActionContext {
-  getMealPlans: () => void
+  getTrainerMealPlans: (trainerId: string) => void
   getMealPlan: (id: string) => void
   getClientMealPlans: (clientId: string) => void
-  createMealPlan: (mealPlan: string) => void
+  createMealPlan: (mealPlan: IMealPlan) => void
 }
 
 export const INITIAL_STATE: IMealPlanStateContext = {
