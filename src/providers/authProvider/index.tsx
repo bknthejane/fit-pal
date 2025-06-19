@@ -6,12 +6,14 @@ import { INITIAL_STATE, IUser, AuthActionContext, AuthStateContext } from './con
 import { loginUserPending, loginUserSuccess, loginUserError, registerUserPending, registerUserSuccess, registerUserError } from './actions';
 import { axiosInstance } from '@/utils/axiosInstance';
 import { jwtDecode } from 'jwt-decode';
+import { useRouter } from 'next/navigation';
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
     const instance = axiosInstance();
+    const router = useRouter();
 
-      interface IToken {
+    interface IToken {
         id: string;
         name: string;
         role: string;
@@ -27,11 +29,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             .then(async (response) => {
                 dispatch(loginUserSuccess(response.data));
                 sessionStorage.setItem('token', response.data.data.token);
-                 const token = jwtDecode<IToken>(JSON.stringify(response.data.data.token));
+                const token = jwtDecode<IToken>(JSON.stringify(response.data.data.token));
 
                 sessionStorage.setItem('userRole', token.role)
                 sessionStorage.setItem('userId', token.id)
                 sessionStorage.setItem('name', token.name)
+
+                const role = sessionStorage.getItem('userRole');
+                if (role === 'admin') {
+                    router.push('/trainer');
+                } else {
+                    router.push('/client/dashboard');
+                }
             })
             .catch(error => {
                 console.log(error.message)

@@ -21,7 +21,7 @@ const ClientPage: React.FC = () => {
   }, ['']);
 
   const handleBack = () => {
-    router.push('/trainer/dashboard');
+    router.push('/trainer');
   };
 
   const handleCreateClient = () => {
