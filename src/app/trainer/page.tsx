@@ -46,10 +46,6 @@ const TrainerDashboard: React.FC = () => {
         router.push('/trainer/foodItems')
     };
 
-    // const trainerInfo = {
-    //   name: sessionStorage.getItem('name') || 'Trainer',
-    // };
-
     const handleLogout = () => {
         sessionStorage.clear();
         router.push('/login');

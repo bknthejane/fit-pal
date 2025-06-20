@@ -26,9 +26,6 @@ export interface IFoodStateContext {
 
 export interface IFoodActionContext {
     getFoods: () => void;
-    // getFood: (id: string) => void;
-    // searchFoods: (term: string) => void;
-    // getFoodsByCategory: (category: string) => void;
     createFood: (food: IFood) => void;
 }
 
